@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-richtext",
+      "settings": {
+        "heading": "Page",
+        "content": "<p>Small-batch bar soap from Franktown, Colorado.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

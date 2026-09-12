@@ -1,0 +1,40 @@
+{%- liquid
+  if product
+    assign card_title = product.title
+    assign card_url = product.url
+    assign card_price = product.price | money
+    assign card_image = product.featured_image
+    assign card_alt = product.featured_image.alt | default: product.title
+  else
+    assign card_title = title
+    assign card_url = url
+    assign card_price = price
+    assign card_image = image
+    assign card_alt = title
+  endif
+-%}
+<a class="product-card" href="{{ card_url }}">
+  <div class="product-card__image-wrap">
+    {%- if card_image != blank -%}
+      <img
+        class="product-card__image"
+        src="{{ card_image | image_url: width: 900 }}"
+        alt="{{ card_alt | escape }}"
+        width="900"
+        height="900"
+        loading="lazy"
+      >
+    {%- elsif image_src != blank -%}
+      <img
+        class="product-card__image"
+        src="{{ image_src | asset_url }}"
+        alt="{{ card_alt | escape }}"
+        width="900"
+        height="900"
+        loading="lazy"
+      >
+    {%- endif -%}
+  </div>
+  <h2 class="product-card__title">{{ card_title }}</h2>
+  <p class="product-card__price">{{ card_price }}</p>
+</a>

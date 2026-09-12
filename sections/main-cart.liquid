@@ -1,0 +1,62 @@
+<div class="page-width cart">
+  <h1>Cart</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <p class="empty-state">Your cart is empty. <a href="{{ routes.root_url }}">Browse the soaps</a>.</p>
+  {%- else -%}
+    {%- form 'cart' -%}
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Soap</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td>
+                <div class="cart-item">
+                  {%- if item.image -%}
+                    <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="200" height="200">
+                  {%- endif -%}
+                  <div>
+                    <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    <p>
+                      <a href="{{ item.url_to_remove }}">Remove</a>
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <input
+                  class="qty-input"
+                  type="number"
+                  name="updates[]"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  aria-label="Quantity for {{ item.title | escape }}"
+                >
+              </td>
+              <td>{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div class="cart-actions">
+        <button class="button--ghost" type="submit" name="update">Update cart</button>
+        <button type="submit" name="checkout">Checkout</button>
+        <p class="cart-total">Total {{ cart.total_price | money }}</p>
+      </div>
+    {%- endform -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

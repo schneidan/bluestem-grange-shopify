@@ -1,0 +1,21 @@
+{%- if section.settings.intro != blank -%}
+  <div class="page-width">
+    <div class="home-intro">
+      <p>{{ section.settings.intro }}</p>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Home intro",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Small-batch bar soap from the high prairie. Handmade in Franktown, Colorado."
+    }
+  ]
+}
+{% endschema %}

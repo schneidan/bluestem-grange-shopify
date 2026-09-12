@@ -1,0 +1,25 @@
+<footer class="site-footer">
+  <a class="site-footer__wordmark" href="{{ routes.root_url }}">
+    <img
+      src="{{ 'bluestem-grange-logo-horz-name-only.png' | asset_url }}"
+      alt="{{ shop.name }}"
+      width="800"
+      height="160"
+    >
+  </a>
+  <p class="site-footer__note">{{ section.settings.footer_text }}</p>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "Handmade bar soap · Franktown, Colorado · Est. 2020"
+    }
+  ]
+}
+{% endschema %}

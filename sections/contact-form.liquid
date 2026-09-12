@@ -1,0 +1,55 @@
+<div class="page-width">
+  <article class="prose">
+    <h1>{{ page.title | default: section.settings.heading }}</h1>
+    {%- if page.content != blank -%}
+      {{ page.content }}
+    {%- else -%}
+      {{ section.settings.content }}
+    {%- endif -%}
+
+    {%- form 'contact' -%}
+      {%- if form.posted_successfully? -%}
+        <p>Thanks — we will get back to you soon.</p>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <p>{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+
+      <div class="contact-form">
+        <div class="field">
+          <label for="ContactName">Name</label>
+          <input type="text" id="ContactName" name="contact[name]" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="ContactEmail">Email</label>
+          <input type="email" id="ContactEmail" name="contact[email]" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="ContactBody">Message</label>
+          <textarea id="ContactBody" name="contact[body]" required></textarea>
+        </div>
+        <button type="submit">Send</button>
+      </div>
+    {%- endform -%}
+  </article>
+</div>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Fallback heading",
+      "default": "Contact"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Intro",
+      "default": "<p>Questions about an order or a custom batch? Write us at hello@bluestemgrange.com or use the form.</p>"
+    }
+  ]
+}
+{% endschema %}

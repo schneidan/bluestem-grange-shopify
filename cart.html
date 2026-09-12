@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cart — Bluestem Grange</title>
+    <base href="/bluestem-grange/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Josefin+Sans:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="icon" href="assets/bluestem-grange-logo-BG.png" type="image/png">
+  </head>
+  <body>
+    <a class="skip-link" href="#MainContent">Skip to content</a>
+    <header class="site-header site-header--page is-visible" data-compact-header>
+      <a class="site-header__mark" href="index.html">
+        <img src="assets/bluestem-grange-logo-full-horz.png" alt="Bluestem Grange" width="1562" height="300">
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+          <a href="index.html">Shop</a>
+          <a href="about.html">About</a>
+          <a href="ingredients.html">Ingredients</a>
+          <a href="shipping.html">Shipping</a>
+          <a href="contact.html">Contact</a>
+          <a href="cart.html" aria-current="page">Cart</a>
+      </nav>
+    </header>
+    <main id="MainContent" class="page-main">
+      <div class="page-width cart">
+        <h1>Cart</h1>
+        <form class="cart-form" action="#" method="post">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Soap</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="cart-item">
+                    <img src="assets/product-ponderosa-pine.jpg" alt="Ponderosa Pine" width="200" height="200">
+                    <div>
+                      <a href="products/ponderosa-pine.html">Ponderosa Pine</a>
+                      <p><a href="#">Remove</a></p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <input class="qty-input" type="number" name="updates[]" value="1" min="0" aria-label="Quantity for Ponderosa Pine">
+                </td>
+                <td>$12.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cart-item">
+                    <img src="assets/product-oat-honey.jpg" alt="Oat and Honey" width="200" height="200">
+                    <div>
+                      <a href="products/oat-honey.html">Oat &amp; Honey</a>
+                      <p><a href="#">Remove</a></p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <input class="qty-input" type="number" name="updates[]" value="2" min="0" aria-label="Quantity for Oat and Honey">
+                </td>
+                <td>$20.00</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="cart-actions">
+            <button class="button button--ghost" type="submit" name="update">Update cart</button>
+            <button type="submit" name="checkout">Checkout</button>
+            <p class="cart-total">Total $32.00</p>
+          </div>
+        </form>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <a class="site-footer__wordmark" href="index.html">
+        <img src="assets/bluestem-grange-logo-horz-name-only.png" alt="Bluestem Grange" width="800" height="160">
+      </a>
+      <p class="site-footer__note">Handmade bar soap · Franktown, Colorado · Est. 2020</p>
+    </footer>
+    <script src="assets/theme.js" defer></script>
+  </body>
+</html>

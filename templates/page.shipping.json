@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-richtext",
+      "settings": {
+        "heading": "Shipping",
+        "content": "<p>We ship bar soap within the United States. Rates are calculated at checkout.</p><p>Orders usually leave Franktown within a few days. Because this is a small shop, a busy curing rack can add a little time — we will say so if your bar is still resting.</p><p>Soap travels well. We pack it simply and skip the extra plastic.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

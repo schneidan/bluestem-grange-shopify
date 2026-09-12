@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "products": {
+      "type": "product-grid",
+      "blocks": {
+        "sagebrush": {
+          "type": "product",
+          "settings": {
+            "title": "Sagebrush & Cedar",
+            "price": "$12.00",
+            "url": "/products/sagebrush-cedar",
+            "image_src": "product-sagebrush-cedar.jpg"
+          }
+        },
+        "lavender": {
+          "type": "product",
+          "settings": {
+            "title": "Prairie Lavender",
+            "price": "$11.00",
+            "url": "/products/prairie-lavender",
+            "image_src": "product-prairie-lavender.jpg"
+          }
+        },
+        "pine": {
+          "type": "product",
+          "settings": {
+            "title": "Ponderosa Pine",
+            "price": "$12.00",
+            "url": "/products/ponderosa-pine",
+            "image_src": "product-ponderosa-pine.jpg"
+          }
+        },
+        "rose": {
+          "type": "product",
+          "settings": {
+            "title": "Wild Rose",
+            "price": "$11.00",
+            "url": "/products/wild-rose",
+            "image_src": "product-wild-rose.jpg"
+          }
+        },
+        "mint": {
+          "type": "product",
+          "settings": {
+            "title": "High Country Mint",
+            "price": "$10.00",
+            "url": "/products/high-country-mint",
+            "image_src": "product-high-country-mint.jpg"
+          }
+        },
+        "oat": {
+          "type": "product",
+          "settings": {
+            "title": "Oat & Honey",
+            "price": "$10.00",
+            "url": "/products/oat-honey",
+            "image_src": "product-oat-honey.jpg"
+          }
+        }
+      },
+      "block_order": ["sagebrush", "lavender", "pine", "rose", "mint", "oat"],
+      "settings": {
+        "products_per_page": 12
+      }
+    }
+  },
+  "order": ["products"]
+}

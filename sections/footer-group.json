@@ -1,0 +1,13 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "footer_text": "Handmade bar soap · Franktown, Colorado · Est. 2020"
+      }
+    }
+  },
+  "order": ["footer"]
+}

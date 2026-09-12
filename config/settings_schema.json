@@ -1,0 +1,34 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Bluestem Grange",
+    "theme_version": "1.0.0",
+    "theme_author": "Bluestem Grange",
+    "theme_documentation_url": "https://github.com",
+    "theme_support_email": "hello@bluestemgrange.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text and links",
+        "default": "#0E4433"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "info": "Decorative only — not used for links.",
+        "default": "#6DBACA"
+      }
+    ]
+  }
+]

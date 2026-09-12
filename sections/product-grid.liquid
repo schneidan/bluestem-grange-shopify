@@ -1,0 +1,99 @@
+{%- liquid
+  assign per_page = section.settings.products_per_page | default: 12
+  if request.page_type == 'collection' and collection != blank
+    assign product_collection = collection
+  elsif section.settings.collection != blank
+    assign product_collection = section.settings.collection
+  else
+    assign product_collection = collections.all
+  endif
+  assign use_live_products = false
+  if product_collection != blank and product_collection.products_count > 0
+    assign use_live_products = true
+  endif
+-%}
+
+<div class="page-width">
+  {%- if request.page_type == 'collection' -%}
+    <h1 class="collection-title">{{ collection.title }}</h1>
+  {%- endif -%}
+
+  {%- if use_live_products -%}
+    {%- paginate product_collection.products by per_page -%}
+      <div class="product-grid">
+        {%- for product in product_collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  {%- else -%}
+    <div class="product-grid">
+      {%- for block in section.blocks -%}
+        {% render 'product-card',
+          title: block.settings.title,
+          url: block.settings.url,
+          price: block.settings.price,
+          image_src: block.settings.image_src
+        %}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Leave blank to list all products. Live products replace the placeholder blocks."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 12,
+      "max": 36,
+      "step": 12,
+      "label": "Products per page",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Placeholder product",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "image_src",
+          "label": "Asset filename",
+          "info": "Image in the theme assets folder, e.g. product-ponderosa-pine.jpg"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product grid"
+    }
+  ]
+}
+{% endschema %}

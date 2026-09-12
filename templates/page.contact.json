@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Contact",
+        "content": "<p>Questions about an order or a custom batch? Write us at hello@bluestemgrange.com or use the form.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

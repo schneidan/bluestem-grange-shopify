@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-richtext",
+      "settings": {
+        "heading": "About",
+        "content": "<p>Bluestem Grange is a small soap shop in Franktown, Colorado, named for the tallgrass that still holds this prairie and the old grange halls that gathered it.</p><p>We have been making bar soap here since 2020 — cold-process, poured in small batches, cut by hand. No pumps, no plastic bottles. Just a bar that earns its keep at the sink.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

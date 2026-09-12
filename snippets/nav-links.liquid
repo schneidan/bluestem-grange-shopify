@@ -1,0 +1,27 @@
+{%- liquid
+  assign menu = section.settings.menu
+-%}
+<nav class="site-nav" aria-label="Primary">
+  {%- if menu != blank -%}
+    {%- for link in menu.links -%}
+      <a
+        href="{{ link.url }}"
+        {% if link.current %}
+          aria-current="page"
+        {% endif %}
+      >
+        {{ link.title }}
+      </a>
+    {%- endfor -%}
+  {%- else -%}
+    <a href="{{ routes.root_url }}" {% if request.page_type == 'index' %}aria-current="page"{% endif %}>Shop</a>
+    <a href="{{ pages.about.url | default: '/pages/about' }}" {% if page.handle == 'about' %}aria-current="page"{% endif %}>About</a>
+    <a href="{{ pages.ingredients.url | default: '/pages/ingredients' }}" {% if page.handle == 'ingredients' %}aria-current="page"{% endif %}>Ingredients</a>
+    <a href="{{ pages.shipping.url | default: '/pages/shipping' }}" {% if page.handle == 'shipping' %}aria-current="page"{% endif %}>Shipping</a>
+    <a href="{{ pages.contact.url | default: '/pages/contact' }}" {% if page.handle == 'contact' %}aria-current="page"{% endif %}>Contact</a>
+  {%- endif -%}
+  <a href="{{ routes.cart_url }}" {% if request.page_type == 'cart' %}aria-current="page"{% endif %}>
+    Cart
+    {%- if cart.item_count > 0 %} ({{ cart.item_count }}){% endif -%}
+  </a>
+</nav>

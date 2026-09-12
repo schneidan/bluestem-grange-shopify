@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ponderosa Pine — Bluestem Grange</title>
+    <base href="/bluestem-grange/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Josefin+Sans:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="icon" href="assets/bluestem-grange-logo-BG.png" type="image/png">
+  </head>
+  <body>
+    <a class="skip-link" href="#MainContent">Skip to content</a>
+    <header class="site-header site-header--page is-visible" data-compact-header>
+      <a class="site-header__mark" href="index.html">
+        <img src="assets/bluestem-grange-logo-full-horz.png" alt="Bluestem Grange" width="1562" height="300">
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+          <a href="index.html">Shop</a>
+          <a href="about.html">About</a>
+          <a href="ingredients.html">Ingredients</a>
+          <a href="shipping.html">Shipping</a>
+          <a href="contact.html">Contact</a>
+          <a href="cart.html">Cart</a>
+      </nav>
+    </header>
+    <main id="MainContent" class="page-main">
+      <article class="page-width product">
+        <div>
+          <img class="product__image" src="assets/product-ponderosa-pine.jpg" alt="Ponderosa Pine bar soap" width="1400" height="1400">
+        </div>
+        <div>
+          <h1>Ponderosa Pine</h1>
+          <p class="product__price">$12.00</p>
+          <p class="product__meta">4.5 oz bar</p>
+          <p>Forest floor and ponderosa needles, with the faint vanilla note the bark gives off in the sun.</p>
+          <p><strong>Ingredients:</strong> saponified olive oil, coconut oil, and shea butter; pine and cedarwood essential oils.</p>
+          <form class="product-form" action="cart.html" method="get">
+            <div class="field">
+              <label for="Quantity">Quantity</label>
+              <input class="qty-input" type="number" id="Quantity" name="quantity" value="1" min="1">
+            </div>
+            <button type="submit">Add to cart</button>
+          </form>
+        </div>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <a class="site-footer__wordmark" href="index.html">
+        <img src="assets/bluestem-grange-logo-horz-name-only.png" alt="Bluestem Grange" width="800" height="160">
+      </a>
+      <p class="site-footer__note">Handmade bar soap · Franktown, Colorado · Est. 2020</p>
+    </footer>
+    <script src="assets/theme.js" defer></script>
+  </body>
+</html>

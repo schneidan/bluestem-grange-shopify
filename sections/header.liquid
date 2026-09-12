@@ -1,0 +1,42 @@
+<header
+  class="site-header {% if request.page_type == 'index' %}site-header--compact{% else %}site-header--page is-visible{% endif %}"
+  data-compact-header
+>
+  <a class="site-header__mark" href="{{ routes.root_url }}">
+    <img
+      src="{{ 'bluestem-grange-logo-full-horz.png' | asset_url }}"
+      alt="{{ shop.name }}"
+      width="1562"
+      height="300"
+    >
+  </a>
+  {% render 'nav-links' %}
+</header>
+
+{%- if request.page_type == 'index' -%}
+  <div class="site-header-hero" data-hero-header>
+    <a class="site-header-hero__wordmark" href="{{ routes.root_url }}">
+      <img
+        src="{{ 'bluestem-grange-logo-full-horz.png' | asset_url }}"
+        alt="{{ shop.name }} — Franktown, Colorado"
+        width="1200"
+        height="280"
+      >
+    </a>
+    {% render 'nav-links' %}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}
