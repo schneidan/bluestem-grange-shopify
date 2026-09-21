@@ -2,9 +2,9 @@
   <h1>Cart</h1>
 
   {%- if cart.item_count == 0 -%}
-    <p class="empty-state">Your cart is empty. <a href="{{ routes.root_url }}">Browse the soaps</a>.</p>
+    <p class="empty-state">Your cart is empty. <a href="{{ routes.all_products_collection_url }}">Browse the soaps</a>.</p>
   {%- else -%}
-    {%- form 'cart' -%}
+    {%- form 'cart', cart -%}
       <table class="cart-table">
         <thead>
           <tr>

@@ -22,7 +22,7 @@
       </div>
     {%- endif -%}
 
-    {%- form 'product', product -%}
+    {%- form 'product', product, class: 'product-form' -%}
       <input type="hidden" name="id" value="{{ current_variant.id }}">
       <div class="field">
         <label for="Quantity-{{ section.id }}">Quantity</label>

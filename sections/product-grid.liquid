@@ -1,32 +1,239 @@
 {%- liquid
   assign per_page = section.settings.products_per_page | default: 12
+  assign is_collection_page = false
   if request.page_type == 'collection' and collection != blank
+    assign is_collection_page = true
+  endif
+
+  assign product_collection = blank
+  if is_collection_page
     assign product_collection = collection
   elsif section.settings.collection != blank
-    assign product_collection = section.settings.collection
-  else
+    assign product_collection = collections[section.settings.collection.handle]
+    if product_collection == blank
+      assign product_collection = section.settings.collection
+    endif
+  elsif collections.all != blank and collections.all.products_count > 0
     assign product_collection = collections.all
   endif
+
   assign use_live_products = false
   if product_collection != blank and product_collection.products_count > 0
     assign use_live_products = true
   endif
+
+  assign has_active_tags = false
+  if current_tags.size > 0
+    assign has_active_tags = true
+  endif
 -%}
 
 <div class="page-width">
-  {%- if request.page_type == 'collection' -%}
-    <h1 class="collection-title">{{ collection.title }}</h1>
+  {%- if is_collection_page -%}
+    <header class="collection-header">
+      <h1 class="collection-title">
+        {%- if collection.handle == 'all' -%}
+          Products
+        {%- else -%}
+          {{ collection.title }}
+        {%- endif -%}
+      </h1>
+      {%- if collection.description != blank -%}
+        <div class="collection-description">{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    <div class="collection-toolbar">
+      {%- liquid
+        if collection.handle == 'all'
+          assign category_label = 'All'
+        else
+          assign category_label = collection.title
+        endif
+      -%}
+
+      <div class="toolbar-field">
+        <span class="toolbar-field__label" id="CategoryLabel-{{ section.id }}">Product categories:</span>
+        <div class="toolbar-dropdown" data-toolbar-dropdown>
+          <button
+            type="button"
+            class="toolbar-dropdown__toggle"
+            aria-expanded="false"
+            aria-controls="CategoryPanel-{{ section.id }}"
+            aria-labelledby="CategoryLabel-{{ section.id }}"
+            data-toolbar-dropdown-toggle
+          >
+            <span class="toolbar-dropdown__value">{{ category_label }}</span>
+            <svg class="toolbar-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+              <path d="M2.25 4.5 6 8.25 9.75 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div
+            id="CategoryPanel-{{ section.id }}"
+            class="toolbar-dropdown__panel"
+            hidden
+            data-toolbar-dropdown-panel
+            role="listbox"
+            aria-label="Product categories"
+          >
+            <a
+              class="toolbar-dropdown__option{% if collection.handle == 'all' %} is-active{% endif %}"
+              href="{{ routes.all_products_collection_url }}"
+              role="option"
+              {% if collection.handle == 'all' %}aria-selected="true"{% else %}aria-selected="false"{% endif %}
+            >
+              All
+            </a>
+            {%- if section.settings.collection_nav != blank and section.settings.collection_nav.size > 0 -%}
+              {%- for nav_collection in section.settings.collection_nav -%}
+                {%- liquid
+                  assign skip_collection = false
+                  if nav_collection == blank or nav_collection.handle == 'all'
+                    assign skip_collection = true
+                  endif
+                  assign title_down = nav_collection.title | downcase
+                  if title_down == 'home page' or title_down == 'homepage' or title_down == 'home'
+                    assign skip_collection = true
+                  endif
+                  if nav_collection.handle == 'frontpage' or nav_collection.handle == 'home-page' or nav_collection.handle == 'homepage' or nav_collection.handle == 'home'
+                    assign skip_collection = true
+                  endif
+                -%}
+                {%- unless skip_collection -%}
+                  <a
+                    class="toolbar-dropdown__option{% if collection.handle == nav_collection.handle %} is-active{% endif %}"
+                    href="{{ nav_collection.url }}"
+                    role="option"
+                    {% if collection.handle == nav_collection.handle %}aria-selected="true"{% else %}aria-selected="false"{% endif %}
+                  >
+                    {{ nav_collection.title }}
+                  </a>
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- for nav_collection in collections -%}
+                {%- liquid
+                  assign skip_collection = false
+                  if nav_collection.handle == 'all' or nav_collection.products_count == 0
+                    assign skip_collection = true
+                  endif
+                  assign title_down = nav_collection.title | downcase
+                  if title_down == 'home page' or title_down == 'homepage' or title_down == 'home'
+                    assign skip_collection = true
+                  endif
+                  if nav_collection.handle == 'frontpage' or nav_collection.handle == 'home-page' or nav_collection.handle == 'homepage' or nav_collection.handle == 'home'
+                    assign skip_collection = true
+                  endif
+                -%}
+                {%- unless skip_collection -%}
+                  <a
+                    class="toolbar-dropdown__option{% if collection.handle == nav_collection.handle %} is-active{% endif %}"
+                    href="{{ nav_collection.url }}"
+                    role="option"
+                    {% if collection.handle == nav_collection.handle %}aria-selected="true"{% else %}aria-selected="false"{% endif %}
+                  >
+                    {{ nav_collection.title }}
+                  </a>
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      {%- if collection.all_tags.size > 0 -%}
+        <div class="toolbar-field">
+          <span class="toolbar-field__label" id="ScentsLabel-{{ section.id }}">Scents:</span>
+          <div
+            class="toolbar-dropdown tag-filter"
+            data-toolbar-dropdown
+            data-tag-filter
+            data-collection-url="{{ collection.url }}"
+          >
+            <button
+              type="button"
+              class="toolbar-dropdown__toggle{% if has_active_tags %} is-active{% endif %}"
+              aria-expanded="false"
+              aria-controls="TagFilterPanel-{{ section.id }}"
+              aria-labelledby="ScentsLabel-{{ section.id }}"
+              data-toolbar-dropdown-toggle
+              data-tag-filter-toggle
+            >
+              <span class="toolbar-dropdown__value">
+                {%- if has_active_tags -%}
+                  {{ current_tags.size }} selected
+                {%- else -%}
+                  All
+                {%- endif -%}
+              </span>
+              <svg class="toolbar-dropdown__icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+                <path d="M1.5 2.5h11L8.5 7.2v3.3L5.5 12V7.2L1.5 2.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div
+              id="TagFilterPanel-{{ section.id }}"
+              class="toolbar-dropdown__panel tag-filter__panel"
+              hidden
+              data-toolbar-dropdown-panel
+              data-tag-filter-panel
+            >
+              <div class="tag-filter__scroll" role="group" aria-label="Scents">
+                {%- for tag in collection.all_tags -%}
+                  {%- assign tag_is_active = false -%}
+                  {%- if has_active_tags and current_tags contains tag -%}
+                    {%- assign tag_is_active = true -%}
+                  {%- endif -%}
+                  <label class="tag-filter__option">
+                    <input
+                      type="checkbox"
+                      value="{{ tag | handleize }}"
+                      {% if tag_is_active %}checked{% endif %}
+                      data-tag-filter-input
+                    >
+                    <span>{{ tag }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+              {%- if has_active_tags -%}
+                <button type="button" class="tag-filter__clear" data-tag-filter-clear>
+                  Clear scents
+                </button>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
   {%- endif -%}
 
   {%- if use_live_products -%}
-    {%- paginate product_collection.products by per_page -%}
+    {%- if is_collection_page -%}
+      {%- paginate collection.products by per_page -%}
+        <div class="product-grid">
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product %}
+          {%- else -%}
+            <p class="empty-state">No products match this filter.</p>
+          {%- endfor -%}
+        </div>
+        {% render 'pagination', paginate: paginate %}
+      {%- endpaginate -%}
+    {%- else -%}
       <div class="product-grid">
-        {%- for product in product_collection.products -%}
+        {%- for product in product_collection.products limit: per_page -%}
           {% render 'product-card', product: product %}
         {%- endfor -%}
       </div>
-      {% render 'pagination', paginate: paginate %}
-    {%- endpaginate -%}
+      {%- if product_collection.products_count > per_page -%}
+        <p class="product-grid__more">
+          <a href="{{ routes.all_products_collection_url }}">View all products</a>
+        </p>
+      {%- elsif product_collection.handle != 'all' -%}
+        <p class="product-grid__more">
+          <a href="{{ routes.all_products_collection_url }}">Browse all products</a>
+        </p>
+      {%- endif -%}
+    {%- endif -%}
   {%- else -%}
     <div class="product-grid">
       {%- for block in section.blocks -%}
@@ -38,6 +245,11 @@
         %}
       {%- endfor -%}
     </div>
+    {%- unless is_collection_page -%}
+      <p class="product-grid__more">
+        <a href="{{ routes.all_products_collection_url }}">Browse all products</a>
+      </p>
+    {%- endunless -%}
   {%- endif -%}
 </div>
 
@@ -48,8 +260,8 @@
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection",
-      "info": "Leave blank to list all products. Live products replace the placeholder blocks."
+      "label": "Homepage collection",
+      "info": "Homepage only. Leave blank for all products (limited count). Full browse + filters are on /collections/all."
     },
     {
       "type": "range",
@@ -59,6 +271,17 @@
       "step": 12,
       "label": "Products per page",
       "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Collection switcher"
+    },
+    {
+      "type": "collection_list",
+      "id": "collection_nav",
+      "label": "Collections to list (after All)",
+      "info": "Pick your product-type collections here. If empty, every non-empty collection is listed.",
+      "limit": 12
     }
   ],
   "blocks": [
