@@ -1,4 +1,14 @@
-<div class="page-width">
+{%- liquid
+  assign page_image = section.settings.image
+  assign has_image = false
+  if page_image != blank
+    assign has_image = true
+  endif
+
+  assign image_alt = page_image.alt | default: section.settings.image_alt | default: page.title | default: section.settings.heading
+-%}
+
+<div class="page-width{% if has_image %} page-split{% endif %}">
   <article class="prose">
     <h1>{{ page.title | default: section.settings.heading }}</h1>
     {%- if page.content != blank -%}
@@ -7,6 +17,21 @@
       {{ section.settings.content }}
     {%- endif -%}
   </article>
+
+  {%- if has_image -%}
+    <figure class="page-split__media">
+      {{
+        page_image
+        | image_url: width: 1400
+        | image_tag:
+          class: 'page-split__image',
+          loading: 'lazy',
+          widths: '400, 600, 800, 1000, 1400',
+          sizes: '(min-width: 800px) min(28rem, 42vw), 100vw',
+          alt: image_alt
+      }}
+    </figure>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -24,6 +49,22 @@
       "id": "content",
       "label": "Fallback content",
       "default": "<p>Small-batch bar soap from Franktown, Colorado.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Side image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Optional. Shows to the right of the text on wide screens. Pick from Files / media library in the theme editor."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "info": "Used if the uploaded image has no alt text set."
     }
   ]
 }

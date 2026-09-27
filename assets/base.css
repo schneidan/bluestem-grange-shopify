@@ -626,6 +626,31 @@ button.button--ghost:hover {
   text-decoration-color: var(--color-text);
 }
 
+.page-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  gap: 2.25rem 3rem;
+  align-items: start;
+  padding: 2.5rem 0 4.5rem;
+}
+
+.page-split .prose {
+  max-width: none;
+  padding: 0;
+}
+
+.page-split__media {
+  margin: 0;
+  width: 100%;
+}
+
+.page-split__image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: #f3f7f5;
+}
+
 .cart {
   padding: 2.5rem 0 4.5rem;
 }
@@ -717,6 +742,15 @@ button.button--ghost:hover {
     max-height: 22rem;
     object-fit: cover;
     object-position: center;
+  }
+
+  .page-split {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .page-split__image {
+    max-height: 22rem;
   }
 }
 
