@@ -40,18 +40,20 @@
 
 {% schema %}
 {
-  "name": "Page content",
+  "name": "About",
+  "tag": "section",
   "settings": [
     {
       "type": "image_picker",
       "id": "image",
       "label": "Side image",
-      "info": "Optional. Appears to the right of the text on desktop."
+      "info": "Appears to the right of the text on desktop. Choose a file from your media library."
     },
     {
       "type": "text",
       "id": "image_alt",
-      "label": "Image alt text"
+      "label": "Image alt text",
+      "info": "Optional. Used if the image itself has no alt text."
     },
     {
       "type": "header",
