@@ -610,6 +610,22 @@ button.button--ghost:hover {
   margin-bottom: 1.25rem;
 }
 
+.prose a,
+.product__description a {
+  color: var(--color-text);
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--color-text) 72%, transparent);
+}
+
+.prose a:hover,
+.product__description a:hover {
+  text-decoration-style: solid;
+  text-decoration-color: var(--color-text);
+}
+
 .cart {
   padding: 2.5rem 0 4.5rem;
 }
