@@ -16,14 +16,29 @@
   {%- else -%}
     <a
       href="{{ routes.all_products_collection_url }}"
-      {% if request.page_type == 'collection' %}aria-current="page"{% endif %}
+      {% if request.page_type == 'collection' and collection.handle == 'all' %}aria-current="page"{% endif %}
     >Shop</a>
+    <a
+      href="{{ routes.collections_url }}"
+      {% if request.page_type == 'list-collections' %}aria-current="page"{% endif %}
+    >Collections</a>
     <a href="{{ pages.about.url | default: '/pages/about' }}" {% if page.handle == 'about' %}aria-current="page"{% endif %}>About</a>
     <a href="{{ pages.shipping.url | default: '/pages/shipping' }}" {% if page.handle == 'shipping' %}aria-current="page"{% endif %}>Shipping</a>
     <a href="{{ pages.contact.url | default: '/pages/contact' }}" {% if page.handle == 'contact' %}aria-current="page"{% endif %}>Contact</a>
   {%- endif -%}
+  <button
+    type="button"
+    class="site-nav__search-toggle"
+    data-search-toggle
+    aria-expanded="false"
+    aria-controls="SiteSearchPanel"
+  >
+    Search
+  </button>
   <a href="{{ routes.cart_url }}" {% if request.page_type == 'cart' %}aria-current="page"{% endif %}>
     Cart
-    {%- if cart.item_count > 0 %} ({{ cart.item_count }}){% endif -%}
+    {%- if cart.item_count > 0 -%}
+      <span class="site-nav__cart-count">({{ cart.item_count }})</span>
+    {%- endif -%}
   </a>
 </nav>

@@ -1,4 +1,14 @@
 <footer class="site-footer">
+  {%- if shop.policies.size > 0 -%}
+    <nav class="site-footer__policies" aria-label="Policies">
+      {%- for policy in shop.policies -%}
+        {%- if policy.url != blank -%}
+          <a href="{{ policy.url }}">{{ policy.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+
   <a class="site-footer__wordmark" href="{{ routes.root_url }}">
     <img
       src="{{ 'bluestem-grange-logo-horz-name-only.png' | asset_url }}"

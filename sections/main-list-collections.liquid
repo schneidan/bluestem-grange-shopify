@@ -1,0 +1,94 @@
+{%- liquid
+  assign listed = 0
+-%}
+
+<div class="page-width collections-index">
+  <header class="collection-header">
+    <h1 class="collection-title">{{ section.settings.heading | default: 'Collections' }}</h1>
+    {%- if section.settings.intro != blank -%}
+      <div class="collection-description">{{ section.settings.intro }}</div>
+    {%- endif -%}
+  </header>
+
+  <div class="collections-index__grid">
+    {%- for collection in collections -%}
+      {%- liquid
+        assign skip_collection = false
+        if collection.handle == 'all' or collection.products_count == 0
+          assign skip_collection = true
+        endif
+        assign title_down = collection.title | downcase
+        if title_down == 'home page' or title_down == 'homepage' or title_down == 'home'
+          assign skip_collection = true
+        endif
+        if collection.handle == 'frontpage' or collection.handle == 'home-page' or collection.handle == 'homepage' or collection.handle == 'home'
+          assign skip_collection = true
+        endif
+      -%}
+      {%- unless skip_collection -%}
+        {%- assign listed = listed | plus: 1 -%}
+        <a class="collection-card" href="{{ collection.url }}">
+          <div class="collection-card__image-wrap">
+            {%- if collection.featured_image -%}
+              <img
+                class="collection-card__image"
+                src="{{ collection.featured_image | image_url: width: 900 }}"
+                alt="{{ collection.featured_image.alt | default: collection.title | escape }}"
+                width="{{ collection.featured_image.width }}"
+                height="{{ collection.featured_image.height }}"
+                loading="lazy"
+              >
+            {%- elsif collection.products.first.featured_image -%}
+              <img
+                class="collection-card__image"
+                src="{{ collection.products.first.featured_image | image_url: width: 900 }}"
+                alt="{{ collection.title | escape }}"
+                width="900"
+                height="900"
+                loading="lazy"
+              >
+            {%- endif -%}
+          </div>
+          <h2 class="collection-card__title">{{ collection.title }}</h2>
+          {%- if collection.description != blank -%}
+            <div class="collection-card__excerpt">
+              {{ collection.description | strip_html | truncate: 120 }}
+            </div>
+          {%- endif -%}
+          <p class="collection-card__count">
+            {{ collection.products_count }}
+            {%- if collection.products_count == 1 %} product{% else %} products{% endif -%}
+          </p>
+        </a>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if listed == 0 -%}
+    <p class="empty-state">
+      No collections yet.
+      <a href="{{ routes.all_products_collection_url }}">Browse all products</a>
+      instead.
+    </p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Collections"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro",
+      "default": "<p>Browse soaps by collection.</p>"
+    }
+  ]
+}
+{% endschema %}

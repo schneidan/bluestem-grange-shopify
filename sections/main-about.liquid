@@ -1,5 +1,12 @@
 {%- liquid
-  assign page_image = section.settings.image
+  assign page_image = blank
+
+  if page.metafields.custom.side_image.value != blank
+    assign page_image = page.metafields.custom.side_image.value
+  elsif section.settings.image != blank
+    assign page_image = section.settings.image
+  endif
+
   assign has_image = false
   if page_image != blank
     assign has_image = true
@@ -10,7 +17,7 @@
   elsif section.settings.image_alt != blank
     assign image_alt = section.settings.image_alt
   else
-    assign image_alt = page.title | default: section.settings.heading
+    assign image_alt = page.title | default: section.settings.heading | default: 'About'
   endif
 -%}
 
@@ -44,10 +51,14 @@
   "tag": "section",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "Preferred: set Side image on the page itself (Online Store → Pages → About). Optional fallback below if you use the theme editor."
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Side image",
-      "info": "Appears to the right of the text on desktop. Choose a file from your media library."
+      "label": "Side image (theme editor fallback)",
+      "info": "Used only when the page metafield is empty."
     },
     {
       "type": "text",

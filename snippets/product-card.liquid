@@ -5,15 +5,17 @@
     assign card_price = product.price | money
     assign card_image = product.featured_image
     assign card_alt = product.featured_image.alt | default: product.title
+    assign card_available = product.available
   else
     assign card_title = title
     assign card_url = url
     assign card_price = price
     assign card_image = image
     assign card_alt = title
+    assign card_available = true
   endif
 -%}
-<a class="product-card" href="{{ card_url }}">
+<a class="product-card{% unless card_available %} product-card--sold-out{% endunless %}" href="{{ card_url }}">
   <div class="product-card__image-wrap">
     {%- if card_image != blank -%}
       <img
@@ -34,7 +36,16 @@
         loading="lazy"
       >
     {%- endif -%}
+    {%- unless card_available -%}
+      <span class="product-card__badge">Sold out</span>
+    {%- endunless -%}
   </div>
   <h2 class="product-card__title">{{ card_title }}</h2>
-  <p class="product-card__price">{{ card_price }}</p>
+  <p class="product-card__price">
+    {%- if card_available -%}
+      {{ card_price }}
+    {%- else -%}
+      Sold out
+    {%- endif -%}
+  </p>
 </a>

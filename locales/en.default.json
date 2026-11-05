@@ -12,7 +12,16 @@
   "products": {
     "add_to_cart": "Add to cart",
     "sold_out": "Sold out",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "only_left": "Only {{ count }} left",
+    "related": "You may also like"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search soaps…",
+    "submit": "Search",
+    "no_results": "No results for “{{ terms }}”.",
+    "results_count": "{{ count }} results for “{{ terms }}”"
   },
   "cart": {
     "title": "Cart",

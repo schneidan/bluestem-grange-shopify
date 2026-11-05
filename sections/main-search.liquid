@@ -1,0 +1,68 @@
+{%- liquid
+  assign per_page = section.settings.products_per_page | default: 12
+  assign search_term = search.terms | escape
+-%}
+
+<div class="page-width search-page">
+  <header class="collection-header">
+    <h1 class="collection-title">Search</h1>
+    {%- if search.performed -%}
+      {%- if search.results_count == 0 -%}
+        <p class="search-page__summary">No results for “{{ search_term }}”.</p>
+      {%- else -%}
+        <p class="search-page__summary">
+          {{ search.results_count }}
+          {%- if search.results_count == 1 %} result{% else %} results{% endif %}
+          for “{{ search_term }}”
+        </p>
+      {%- endif -%}
+    {%- endif -%}
+  </header>
+
+  <form class="search-form" action="{{ routes.search_url }}" method="get" role="search">
+    <label class="visually-hidden" for="Search-{{ section.id }}">Search products</label>
+    <input
+      class="search-form__input"
+      type="search"
+      id="Search-{{ section.id }}"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="Search soaps…"
+      autocomplete="off"
+    >
+    <input type="hidden" name="type" value="product">
+    <button type="submit">Search</button>
+  </form>
+
+  {%- if search.performed -%}
+    {%- paginate search.results by per_page -%}
+      <div class="product-grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- endif -%}
+        {%- else -%}
+          <p class="empty-state">Try another scent name or soap title.</p>
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 12,
+      "max": 36,
+      "step": 12,
+      "label": "Results per page",
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

@@ -30,17 +30,31 @@
 
 <div class="page-width">
   {%- if is_collection_page -%}
-    <header class="collection-header">
-      <h1 class="collection-title">
-        {%- if collection.handle == 'all' -%}
-          Products
-        {%- else -%}
-          {{ collection.title }}
-        {%- endif -%}
-      </h1>
-      {%- if collection.description != blank -%}
-        <div class="collection-description">{{ collection.description }}</div>
+    <header class="collection-header{% if collection.handle != 'all' and collection.featured_image %} collection-header--with-image{% endif %}">
+      {%- if collection.handle != 'all' and collection.featured_image -%}
+        <div class="collection-header__media">
+          <img
+            class="collection-header__image"
+            src="{{ collection.featured_image | image_url: width: 600 }}"
+            alt="{{ collection.featured_image.alt | default: collection.title | escape }}"
+            width="{{ collection.featured_image.width }}"
+            height="{{ collection.featured_image.height }}"
+            loading="eager"
+          >
+        </div>
       {%- endif -%}
+      <div class="collection-header__text">
+        <h1 class="collection-title">
+          {%- if collection.handle == 'all' -%}
+            Products
+          {%- else -%}
+            {{ collection.title }}
+          {%- endif -%}
+        </h1>
+        {%- if collection.description != blank -%}
+          <div class="collection-description">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
     </header>
 
     <div class="collection-toolbar">

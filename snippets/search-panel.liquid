@@ -1,0 +1,28 @@
+<div
+  class="site-search"
+  id="SiteSearchPanel"
+  data-search-panel
+  data-suggest-url="{{ routes.search_url }}/suggest.json"
+  hidden
+>
+  <div class="page-width site-search__inner">
+    <form class="site-search__form" action="{{ routes.search_url }}" method="get" role="search" data-search-form>
+      <label class="visually-hidden" for="SiteSearchInput">Search products</label>
+      <input
+        class="site-search__input"
+        type="search"
+        id="SiteSearchInput"
+        name="q"
+        placeholder="Search soaps…"
+        autocomplete="off"
+        data-search-input
+      >
+      <input type="hidden" name="type" value="product">
+      <button type="submit" class="site-search__submit">Search</button>
+      <button type="button" class="site-search__close" data-search-close aria-label="Close search">
+        Close
+      </button>
+    </form>
+    <div class="site-search__results" data-search-results hidden></div>
+  </div>
+</div>

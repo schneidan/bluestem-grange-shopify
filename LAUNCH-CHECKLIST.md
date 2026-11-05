@@ -20,12 +20,12 @@ Everything you add now (products, theme, pages) **stays** when you pick a paid p
 
 ## Phase 0 — Account, store admin, and theme preview
 
-- [ ] Create Shopify Partner account
-- [ ] Create development store and bookmark admin
-- [ ] Log into the store admin from Partners and set a store password / name
-- [ ] Install Shopify CLI
-- [ ] Run `shopify theme dev` and confirm preview
-- [ ] (Optional) Push theme once and open it in the theme editor
+- [x] Create Shopify Partner account
+- [x] Create development store and bookmark admin
+- [x] Log into the store admin from Partners and set a store password / name
+- [x] Install Shopify CLI
+- [x] Run `shopify theme dev` and confirm preview
+- [x] (Optional) Push theme once and open it in the theme editor
 
 ### 0.1–0.2 Partner + development store (you’re past most of this)
 
@@ -121,10 +121,10 @@ When preview looks right, tick Phase 0 and move on.
 
 Do this in **store admin** (not Partners).
 
-- [ ] Add real soap products (dozen+) with photos, price, inventory
-- [ ] Create Bar soap collection and wire homepage grid
-- [ ] Create About / Shipping / Contact pages + Main menu (Shop → /collections/all)
-- [ ] Smoke-test product → cart → checkout
+- [x] Add real soap products (dozen+) with photos, price, inventory
+- [x] Create Bar soap collection and wire homepage grid
+- [x] Create About / Shipping / Contact pages + Main menu (Shop → /collections/all)
+- [x] Smoke-test product → cart → checkout
 
 ### 1.1 Add products
 
@@ -147,7 +147,11 @@ Do this in **store admin** (not Partners).
 
 1. **Online Store → Pages → Add page** for: About, Shipping, Contact.
 2. On each page’s right sidebar, **Theme template**: pick `about`, `shipping`, or `contact` when listed.
-3. **Online Store → Navigation → Main menu**:
+3. **Side images on About / Contact** (editable on the page, no theme Customize needed):
+   1. **Settings → Custom data → Pages → Add definition**
+   2. Name: `Side image` · Type: **File** → accept **Images** · Namespace/key: `custom.side_image` · Save
+   3. **Online Store → Pages → About** (and Contact) → scroll to **Side image** metafield → upload/select → Save
+4. **Online Store → Navigation → Main menu**:
    - Shop / Products → `/collections/all` (or Catalog → All products)
    - About, Shipping, Contact, Cart
    - No Ingredients page — put ingredients on each product description instead.
@@ -162,9 +166,9 @@ Do this in **store admin** (not Partners).
 
 ## Phase 2 — Payments, shipping, tax (still on the free development store)
 
-- [ ] Enable payments in test mode / Bogus Gateway
+- [x] Enable payments in test mode / Bogus Gateway
 - [ ] Set shipping rates and tax
-- [ ] Place a full test order
+- [x] Place a full test order
 
 ### 2.1 Test payments
 
@@ -316,12 +320,12 @@ Partner **Transfer ownership** is for handing a development store to a **client*
 
 Run `shopify theme dev` while we code. Do in order.
 
-- [ ] 5a Product image gallery
-- [ ] 5b Search template + header entry
-- [ ] 5c Sold-out / low-stock messaging
-- [ ] 5d Cart count check + SEO / favicon polish
-- [x] 5e Collection switcher + tag filters (done in theme; wire menu links in admin)
-- [ ] 5f Related products on product page
+- [x] 5a Product image gallery (main image + thumbnail strip)
+- [x] 5b Search template + header entry
+- [x] 5c Sold-out / low-stock messaging
+- [x] 5d Cart count check + SEO / favicon polish
+- [x] 5e Collection switcher + scent/tag filters (done in theme)
+- [x] 5f Related products on product page
 
 ---
 
@@ -344,9 +348,10 @@ The homepage can show a limited grid; full browsing + filters belong on **collec
 1. **Products → Collections** — you already made two. Note their handles (URL ends).
 2. **Online Store → Navigation → Main menu**
    - Set **Shop** (or Products) to point at **All products** / `/collections/all` (Catalog → All, or Collections → Products).
+   - Add **Collections** → `/collections` (lists every collection with image + description).
    - Optionally add each type collection as its own menu item.
    - Remove **Ingredients** if it’s still in the menu (ingredients live on product pages now).
-3. Open the Shopify preview at `/collections/all` (not the homepage, not localhost). You should see collection pills plus a **Filter** button (tags only show if products have tags). Checking tags reloads the page with multi-tag URLs (`tag1+tag2`).
+3. Open `/collections` for the collections index, or `/collections/your-handle` for one collection (image + description at top, then products). On `/collections/all` you’ll still get the category/scent toolbar.
 
 ### Tag tips
 
