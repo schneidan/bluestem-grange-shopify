@@ -123,7 +123,7 @@ Do this in **store admin** (not Partners).
 
 - [x] Add real soap products (dozen+) with photos, price, inventory
 - [x] Create Bar soap collection and wire homepage grid
-- [x] Create About / Shipping / Contact pages + Main menu (Shop → /collections/all)
+- [x] Create About / Contact pages + Main menu (Shop → /collections/all; Shipping via policy)
 - [x] Smoke-test product → cart → checkout
 
 ### 1.1 Add products
@@ -145,16 +145,17 @@ Do this in **store admin** (not Partners).
 
 ### 1.3 Pages + menu
 
-1. **Online Store → Pages → Add page** for: About, Shipping, Contact.
-2. On each page’s right sidebar, **Theme template**: pick `about`, `shipping`, or `contact` when listed.
+1. **Online Store → Pages → Add page** for: About, Contact.
+2. On each page’s right sidebar, **Theme template**: pick `about` or `contact` when listed.
 3. **Side images on About / Contact** (editable on the page, no theme Customize needed):
    1. **Settings → Custom data → Pages → Add definition**
    2. Name: `Side image` · Type: **File** → accept **Images** · Namespace/key: `custom.side_image` · Save
    3. **Online Store → Pages → About** (and Contact) → scroll to **Side image** metafield → upload/select → Save
 4. **Online Store → Navigation → Main menu**:
    - Shop / Products → `/collections/all` (or Catalog → All products)
-   - About, Shipping, Contact, Cart
-   - No Ingredients page — put ingredients on each product description instead.
+   - Collections → `/collections`
+   - About, Contact, Cart
+   - Shipping lives in **Settings → Policies** (footer links); no custom Shipping page needed.
 
 ### 1.4 Smoke-test cart
 

@@ -23,7 +23,6 @@
       {% if request.page_type == 'list-collections' %}aria-current="page"{% endif %}
     >Collections</a>
     <a href="{{ pages.about.url | default: '/pages/about' }}" {% if page.handle == 'about' %}aria-current="page"{% endif %}>About</a>
-    <a href="{{ pages.shipping.url | default: '/pages/shipping' }}" {% if page.handle == 'shipping' %}aria-current="page"{% endif %}>Shipping</a>
     <a href="{{ pages.contact.url | default: '/pages/contact' }}" {% if page.handle == 'contact' %}aria-current="page"{% endif %}>Contact</a>
   {%- endif -%}
   <button
