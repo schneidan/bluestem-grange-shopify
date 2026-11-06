@@ -316,9 +316,9 @@ button.site-search__submit[type="submit"] {
 .site-search__result img {
   width: 3.25rem;
   height: 3.25rem;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius-photo-thumb);
-  background: #f3f7f5;
+  background: #fff;
 }
 
 .site-search__result-title {
@@ -371,9 +371,9 @@ button.site-search__submit[type="submit"] {
 .collection-header__image {
   width: 100%;
   aspect-ratio: 1;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius-photo);
-  background: #f3f7f5;
+  background: #fff;
 }
 
 .collection-header__text {
@@ -419,14 +419,14 @@ button.site-search__submit[type="submit"] {
   margin-bottom: 0.85rem;
   overflow: hidden;
   border-radius: var(--radius-photo);
-  background: #f3f7f5;
+  background: #fff;
   aspect-ratio: 1;
 }
 
 .collection-card__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius-photo);
 }
 
@@ -696,10 +696,11 @@ button.site-search__submit[type="submit"] {
 
 .product-card__image-wrap {
   position: relative;
-  background: #f3f7f5;
+  background: #fff;
   margin-bottom: 0.85rem;
   overflow: hidden;
   border-radius: var(--radius-photo);
+  aspect-ratio: 1;
 }
 
 .product-card__badge {
@@ -721,9 +722,9 @@ button.site-search__submit[type="submit"] {
 
 .product-card__image {
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center bottom;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
   border-radius: var(--radius-photo);
 }
 
@@ -753,13 +754,18 @@ button.site-search__submit[type="submit"] {
 
 .product__media-main {
   margin: 0;
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: var(--radius-photo);
+  overflow: hidden;
 }
 
 .product__image {
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  background: #f3f7f5;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #fff;
   border-radius: var(--radius-photo);
 }
 
@@ -786,7 +792,7 @@ button.site-search__submit[type="submit"] {
   padding: 0;
   border: 1px solid transparent;
   border-radius: var(--radius-photo-thumb);
-  background: #f3f7f5;
+  background: #fff;
   cursor: pointer;
   overflow: hidden;
 }
@@ -794,7 +800,8 @@ button.site-search__submit[type="submit"] {
 .product__thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 }
 
 .product__thumb:hover {
@@ -1011,9 +1018,9 @@ button.button--ghost:hover {
 
 .page-split__image {
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  background: #f3f7f5;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
   border-radius: var(--radius-photo);
 }
 
@@ -1056,8 +1063,10 @@ button.button--ghost:hover {
 .cart-item img {
   width: 4.5rem;
   height: 4.5rem;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   border-radius: var(--radius-photo-thumb);
+  background: #fff;
 }
 
 .cart-actions {
@@ -1133,9 +1142,12 @@ button.button--ghost:hover {
     gap: 1.75rem;
   }
 
-  .product__image {
+  .product__media-main {
     max-height: 22rem;
-    object-fit: cover;
+  }
+
+  .product__image {
+    object-fit: contain;
     object-position: center;
   }
 
