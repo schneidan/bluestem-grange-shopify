@@ -1,23 +1,7 @@
 {%- liquid
-  assign page_image = blank
-
-  if page.metafields.custom.side_image.value != blank
-    assign page_image = page.metafields.custom.side_image.value
-  elsif section.settings.image != blank
-    assign page_image = section.settings.image
-  endif
-
   assign has_image = false
-  if page_image != blank
+  if page.metafields.custom.side_image.value != blank
     assign has_image = true
-  endif
-
-  if page_image.alt != blank
-    assign image_alt = page_image.alt
-  elsif section.settings.image_alt != blank
-    assign image_alt = section.settings.image_alt
-  else
-    assign image_alt = page.title | default: section.settings.heading | default: 'About'
   endif
 -%}
 
@@ -31,18 +15,7 @@
     {%- endif -%}
   </article>
 
-  {%- if has_image -%}
-    <figure class="page-split__media">
-      <img
-        class="page-split__image"
-        src="{{ page_image | image_url: width: 1400 }}"
-        alt="{{ image_alt | escape }}"
-        width="{{ page_image.width }}"
-        height="{{ page_image.height }}"
-        loading="lazy"
-      >
-    </figure>
-  {%- endif -%}
+  {% render 'page-side-image' %}
 </div>
 
 {% schema %}
@@ -52,19 +25,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Preferred: set Side image on the page itself (Online Store → Pages → About). Optional fallback below if you use the theme editor."
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Side image (theme editor fallback)",
-      "info": "Used only when the page metafield is empty."
-    },
-    {
-      "type": "text",
-      "id": "image_alt",
-      "label": "Image alt text",
-      "info": "Optional. Used if the image itself has no alt text."
+      "content": "Side image: edit Online Store → Pages → this page → metafield “Side image” (custom.side_image). Theme pushes will not overwrite it."
     },
     {
       "type": "header",

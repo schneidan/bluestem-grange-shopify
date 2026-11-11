@@ -2,7 +2,7 @@
   <h1>Cart</h1>
 
   {%- if cart.item_count == 0 -%}
-    <p class="empty-state">Your cart is empty. <a href="{{ routes.all_products_collection_url }}">Browse the soaps</a>.</p>
+    <p class="empty-state">Your cart is empty. <a href="{{ routes.root_url }}">Browse the soaps</a>.</p>
   {%- else -%}
     {%- form 'cart', cart -%}
       <table class="cart-table">
@@ -22,7 +22,7 @@
                     <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="200" height="200">
                   {%- endif -%}
                   <div>
-                    <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    <a href="{{ item.url }}">{{ item.product.title | escape }}</a>
                     <p>
                       <a href="{{ item.url_to_remove }}">Remove</a>
                     </p>
@@ -46,6 +46,7 @@
       </table>
 
       <div class="cart-actions">
+        <a class="button button--ghost" href="{{ routes.root_url }}">Continue shopping</a>
         <button class="button--ghost" type="submit" name="update">Update cart</button>
         <button type="submit" name="checkout">Checkout</button>
         <p class="cart-total">Total {{ cart.total_price | money }}</p>

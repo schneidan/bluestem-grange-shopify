@@ -1,0 +1,46 @@
+{%- comment -%}
+  Renders the page "Side image" metafield (custom.side_image) beside page content.
+  Set it under Online Store → Pages → [page] — not in the theme editor.
+{%- endcomment -%}
+{%- liquid
+  assign side_meta = page.metafields.custom.side_image
+  assign page_image = blank
+  assign image_src = blank
+  assign image_alt = page.title | default: 'Page image'
+  assign img_w = blank
+  assign img_h = blank
+
+  if side_meta.value != blank
+    assign page_image = side_meta.value
+  endif
+
+  if page_image != blank
+    if page_image.preview_image != blank
+      assign image_src = page_image.preview_image | image_url: width: 1400
+      assign img_w = page_image.preview_image.width
+      assign img_h = page_image.preview_image.height
+      if page_image.preview_image.alt != blank
+        assign image_alt = page_image.preview_image.alt
+      endif
+    else
+      assign image_src = page_image | image_url: width: 1400
+      assign img_w = page_image.width
+      assign img_h = page_image.height
+      if page_image.alt != blank
+        assign image_alt = page_image.alt
+      endif
+    endif
+  endif
+-%}
+{%- if image_src != blank -%}
+  <figure class="page-split__media">
+    <img
+      class="page-split__image"
+      src="{{ image_src }}"
+      alt="{{ image_alt | escape }}"
+      {% if img_w != blank %}width="{{ img_w }}"{% endif %}
+      {% if img_h != blank %}height="{{ img_h }}"{% endif %}
+      loading="lazy"
+    >
+  </figure>
+{%- endif -%}

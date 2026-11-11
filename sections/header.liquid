@@ -5,7 +5,7 @@
   <a class="site-header__mark" href="{{ routes.root_url }}">
     <img
       src="{{ 'bluestem-grange-logo-full-horz.png' | asset_url }}"
-      alt="{{ shop.name }}"
+      alt="{{ shop.name | escape }}"
       width="1562"
       height="300"
     >
@@ -18,7 +18,7 @@
     <a class="site-header-hero__wordmark" href="{{ routes.root_url }}">
       <img
         src="{{ 'bluestem-grange-logo-full-horz.png' | asset_url }}"
-        alt="{{ shop.name }} — Franktown, Colorado"
+        alt="{{ shop.name | escape }} — Franktown, Colorado"
         width="1200"
         height="280"
       >

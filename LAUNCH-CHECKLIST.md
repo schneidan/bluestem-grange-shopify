@@ -123,7 +123,7 @@ Do this in **store admin** (not Partners).
 
 - [x] Add real soap products (dozen+) with photos, price, inventory
 - [x] Create Bar soap collection and wire homepage grid
-- [x] Create About / Contact pages + Main menu (Shop → /collections/all; Shipping via policy)
+- [x] Create About / Contact pages + Main menu (Shop → home; Shipping via policy)
 - [x] Smoke-test product → cart → checkout
 
 ### 1.1 Add products
@@ -147,15 +147,21 @@ Do this in **store admin** (not Partners).
 
 1. **Online Store → Pages → Add page** for: About, Contact.
 2. On each page’s right sidebar, **Theme template**: pick `about` or `contact` when listed.
-3. **Side images on About / Contact** (editable on the page, no theme Customize needed):
-   1. **Settings → Custom data → Pages → Add definition**
-   2. Name: `Side image` · Type: **File** → accept **Images** · Namespace/key: `custom.side_image` · Save
-   3. **Online Store → Pages → About** (and Contact) → scroll to **Side image** metafield → upload/select → Save
+3. **Side images on About / Contact** (Pages editor — survives theme push):
+   1. In store admin, bottom-left **gear icon (Settings)** → **Metafields and metaobjects**  
+      (older admins may still say **Custom data**)
+   2. Under **Metafields**, click **Pages** → **Add definition**
+   3. Name: `Side image`
+   4. Type: **File** → accept **Images**
+   5. Namespace and key: exactly `custom.side_image`
+   6. Pin the definition (so it shows on the page editor) → **Save**
+   7. **Online Store → Pages → About** (and Contact) → **Side image** field → upload → **Save** the page
 4. **Online Store → Navigation → Main menu**:
-   - Shop / Products → `/collections/all` (or Catalog → All products)
+   - Shop / Products → Home `/`
    - Collections → `/collections`
    - About, Contact, Cart
    - Shipping lives in **Settings → Policies** (footer links); no custom Shipping page needed.
+   - Don’t link the menu to `/collections/all` for now.
 
 ### 1.4 Smoke-test cart
 
@@ -336,23 +342,23 @@ Run `shopify theme dev` while we code. Do in order.
 **Collections** are groups of products (e.g. “Bar soap”, “Gift sets”). Each has a URL like `/collections/bar-soap`.  
 **Tags** are labels on products (e.g. `lavender`, `oatmeal`). They are not collections; they filter *within* a collection.
 
-There is no special “products page” type. Browsing is usually:
+Browsing for now:
 
-- `/collections/all` — every product  
-- `/collections/your-collection` — one group  
-- `/collections/your-collection/lavender` — that group, filtered by tag  
+- `/` — Home Page collection (sortable in admin; “View more” on the page)  
+- `/collections` — list of collections  
+- `/collections/your-collection` — one group (+ scent filters)  
 
-The homepage can show a limited grid; full browsing + filters belong on **collection** URLs.
+`/collections/all` exists in Shopify but we are not linking to it for now.
 
 ### Set up in admin
 
-1. **Products → Collections** — you already made two. Note their handles (URL ends).
+1. **Products → Collections** — sort the **Home page** collection for homepage order.
 2. **Online Store → Navigation → Main menu**
-   - Set **Shop** (or Products) to point at **All products** / `/collections/all` (Catalog → All, or Collections → Products).
-   - Add **Collections** → `/collections` (lists every collection with image + description).
+   - Set **Shop** (or Products) → Home `/`
+   - Add **Collections** → `/collections`
    - Optionally add each type collection as its own menu item.
-   - Remove **Ingredients** if it’s still in the menu (ingredients live on product pages now).
-3. Open `/collections` for the collections index, or `/collections/your-handle` for one collection (image + description at top, then products). On `/collections/all` you’ll still get the category/scent toolbar.
+   - Avoid linking to `/collections/all` for now.
+3. Open `/collections` for the collections index, or `/collections/your-handle` for one collection.
 
 ### Tag tips
 

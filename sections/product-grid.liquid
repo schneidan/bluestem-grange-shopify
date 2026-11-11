@@ -6,6 +6,7 @@
   endif
 
   assign product_collection = blank
+  assign homepage_load_cap = 50
   if is_collection_page
     assign product_collection = collection
   elsif section.settings.collection != blank
@@ -13,6 +14,8 @@
     if product_collection == blank
       assign product_collection = section.settings.collection
     endif
+  elsif collections.frontpage != blank and collections.frontpage.products_count > 0
+    assign product_collection = collections.frontpage
   elsif collections.all != blank and collections.all.products_count > 0
     assign product_collection = collections.all
   endif
@@ -44,13 +47,7 @@
         </div>
       {%- endif -%}
       <div class="collection-header__text">
-        <h1 class="collection-title">
-          {%- if collection.handle == 'all' -%}
-            Products
-          {%- else -%}
-            {{ collection.title }}
-          {%- endif -%}
-        </h1>
+        <h1 class="collection-title">{{ collection.title }}</h1>
         {%- if collection.description != blank -%}
           <div class="collection-description">{{ collection.description }}</div>
         {%- endif -%}
@@ -58,14 +55,6 @@
     </header>
 
     <div class="collection-toolbar">
-      {%- liquid
-        if collection.handle == 'all'
-          assign category_label = 'All'
-        else
-          assign category_label = collection.title
-        endif
-      -%}
-
       <div class="toolbar-field">
         <span class="toolbar-field__label" id="CategoryLabel-{{ section.id }}">Product categories:</span>
         <div class="toolbar-dropdown" data-toolbar-dropdown>
@@ -77,7 +66,7 @@
             aria-labelledby="CategoryLabel-{{ section.id }}"
             data-toolbar-dropdown-toggle
           >
-            <span class="toolbar-dropdown__value">{{ category_label }}</span>
+            <span class="toolbar-dropdown__value">{{ collection.title }}</span>
             <svg class="toolbar-dropdown__chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
               <path d="M2.25 4.5 6 8.25 9.75 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -90,14 +79,6 @@
             role="listbox"
             aria-label="Product categories"
           >
-            <a
-              class="toolbar-dropdown__option{% if collection.handle == 'all' %} is-active{% endif %}"
-              href="{{ routes.all_products_collection_url }}"
-              role="option"
-              {% if collection.handle == 'all' %}aria-selected="true"{% else %}aria-selected="false"{% endif %}
-            >
-              All
-            </a>
             {%- if section.settings.collection_nav != blank and section.settings.collection_nav.size > 0 -%}
               {%- for nav_collection in section.settings.collection_nav -%}
                 {%- liquid
@@ -204,7 +185,7 @@
                       {% if tag_is_active %}checked{% endif %}
                       data-tag-filter-input
                     >
-                    <span>{{ tag }}</span>
+                    <span>{{ tag | escape }}</span>
                   </label>
                 {%- endfor -%}
               </div>
@@ -233,18 +214,29 @@
         {% render 'pagination', paginate: paginate %}
       {%- endpaginate -%}
     {%- else -%}
-      <div class="product-grid">
-        {%- for product in product_collection.products limit: per_page -%}
-          {% render 'product-card', product: product %}
+      {%- comment -%}
+        Homepage: load up to 50 products (Shopify max without paginate), show first batch, reveal more in place.
+      {%- endcomment -%}
+      <div
+        class="product-grid"
+        data-home-product-grid
+        data-page-size="{{ per_page }}"
+      >
+        {%- for product in product_collection.products limit: homepage_load_cap -%}
+          <div
+            class="product-grid__item"
+            data-home-product-item
+            {% if forloop.index > per_page %}hidden{% endif %}
+          >
+            {% render 'product-card', product: product %}
+          </div>
         {%- endfor -%}
       </div>
       {%- if product_collection.products_count > per_page -%}
         <p class="product-grid__more">
-          <a href="{{ routes.all_products_collection_url }}">View all products</a>
-        </p>
-      {%- elsif product_collection.handle != 'all' -%}
-        <p class="product-grid__more">
-          <a href="{{ routes.all_products_collection_url }}">Browse all products</a>
+          <button type="button" class="product-grid__more-btn" data-home-view-more>
+            View more
+          </button>
         </p>
       {%- endif -%}
     {%- endif -%}
@@ -259,11 +251,6 @@
         %}
       {%- endfor -%}
     </div>
-    {%- unless is_collection_page -%}
-      <p class="product-grid__more">
-        <a href="{{ routes.all_products_collection_url }}">Browse all products</a>
-      </p>
-    {%- endunless -%}
   {%- endif -%}
 </div>
 
@@ -275,7 +262,7 @@
       "type": "collection",
       "id": "collection",
       "label": "Homepage collection",
-      "info": "Homepage only. Leave blank for all products (limited count). Full browse + filters are on /collections/all."
+      "info": "Homepage only. Leave blank to use the Home Page (frontpage) collection. Sort order follows that collection in admin. Loads up to 50 products; “View more” reveals the next batch on the same page."
     },
     {
       "type": "range",
@@ -283,7 +270,7 @@
       "min": 12,
       "max": 36,
       "step": 12,
-      "label": "Products per page",
+      "label": "Products shown initially / per “View more”",
       "default": 12
     },
     {

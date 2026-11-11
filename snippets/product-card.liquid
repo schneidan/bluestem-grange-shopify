@@ -40,7 +40,7 @@
       <span class="product-card__badge">Sold out</span>
     {%- endunless -%}
   </div>
-  <h2 class="product-card__title">{{ card_title }}</h2>
+  <h2 class="product-card__title">{{ card_title | escape }}</h2>
   <p class="product-card__price">
     {%- if card_available -%}
       {{ card_price }}

@@ -15,8 +15,8 @@
     {%- endfor -%}
   {%- else -%}
     <a
-      href="{{ routes.all_products_collection_url }}"
-      {% if request.page_type == 'collection' and collection.handle == 'all' %}aria-current="page"{% endif %}
+      href="{{ routes.root_url }}"
+      {% if request.page_type == 'index' %}aria-current="page"{% endif %}
     >Shop</a>
     <a
       href="{{ routes.collections_url }}"
